@@ -4,7 +4,8 @@ const path = require("path");
 module.exports.debugProcessAndWait = function() {
     // use a random port for debugPort to prevent port clashes.
     // we must use execSync as get-port is async.
-    const portStr = child_process.execSync(`node -e "require('get-port')().then(p => console.log(p))"`);
+    // Set cwd so that node finds the get-port module.
+    const portStr = child_process.execSync(`node -e "require('get-port')().then(p => console.log(p))"`, { cwd: __dirname });
     const debugPort = parseInt(portStr);
 
     process.debugPort = debugPort;
