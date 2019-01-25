@@ -6,7 +6,7 @@ function getHtml(debugUrl) {
     return `
         <html>
             <head>
-                <title>Easy Attach Breakpoint Triggered</title>  
+                <title>Easy Attach Breakpoint Triggered</title>
             </head>
             <body>
                 <textarea id="link" style="width: 100%; height: 150px">${debugUrl}</textarea>
@@ -27,19 +27,21 @@ function getHtml(debugUrl) {
     `;
 }
 
-async function launchServer() {
-    const data = await fetch("http://localhost:9229/json/list");
+async function launchServer(debuggerPort) {
+    const data = await fetch(`http://localhost:${debuggerPort}/json/list`);
     const json = await data.json();
-    // we cannot open this url directly, so open a window instead
-    // prompting to copy that url into to address bar
+
     const chromeDebugUrl = json[0].devtoolsFrontendUrl;
 
+    // we cannot open `chromeDebugUrl` directly, so open a window instead
+    // prompting to copy that url into to address bar.
+    // For that we need a server.
     const server = http.createServer((request, response) => {
         response.writeHead(200, {"Content-Type": "text/html"});
         response.end(getHtml(chromeDebugUrl));
     }).listen(null, async function (err, res) {
         const addr =  "http://localhost:" + this.address().port;
-        
+
         const width = 500;
         const height = 300;
         // todo
@@ -51,7 +53,7 @@ async function launchServer() {
             startingUrl: addr,
             chromeFlags: ["--app=" + addr, `--window-size=${width},${height}`]
         });
-          
+
         chrome.process.on("exit", () => {
             // close server so that the nodejs process exists.
             server.close();
@@ -59,4 +61,6 @@ async function launchServer() {
     });
 }
 
-launchServer();
+const args = process.argv.slice(2);
+const debuggerPort = parseInt(args[0]);
+launchServer(debuggerPort);

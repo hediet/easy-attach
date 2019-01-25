@@ -10,10 +10,14 @@
   "bin": {
     "easy-attach": "./src/cli.js"
   },
+  "scripts": {
+    "run-example": "node ./example/script.js"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "chrome-launcher": "^0.10.5",
     "clipboardy": "^1.2.3",
+    "get-port": "^4.1.0",
     "node-fetch": "^2.3.0"
   }
 }
