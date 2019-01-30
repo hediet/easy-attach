@@ -1,6 +1,6 @@
 {
   "name": "easy-attach",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "author": {
     "name": "Henning Dieterichs"
   },
@@ -25,5 +25,14 @@
   },
   "devDependencies": {
     "@types/node-fetch": "^2.1.4"
-  }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "entries",
+    "docs"
+  ]
 }
