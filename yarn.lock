@@ -2,6 +2,21 @@
 # yarn lockfile v1
 
 
+"@hediet/typed-json-rpc-websocket@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@hediet/typed-json-rpc-websocket/-/typed-json-rpc-websocket-0.1.0.tgz#8af1fb2b8a4082ae80d9315156309161b3f177eb"
+  integrity sha512-WyAvKAmt38744HD2K2P8ghQKpArD7/69VmYg6zhApAYSA31JYxlxEtlDap5lEaYAnlWMKqEuDhn0ZtYcgBrQdg==
+  dependencies:
+    "@hediet/typed-json-rpc" "^0.1.0"
+    isomorphic-ws "^4.0.1"
+
+"@hediet/typed-json-rpc@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@hediet/typed-json-rpc/-/typed-json-rpc-0.1.0.tgz#98b243a651639892f028e8e969e23f97d08f77aa"
+  integrity sha512-Pl6HED6V3vxqyTHcOtbvnDx4zSRrO4v42VXkHtDLqMnIP4J2CQCFC0oA9VdteljYPGB4Xedk/a6SIr6TFiTwQg==
+  dependencies:
+    io-ts "^1.7.0"
+
 "@types/core-js@^0.9.41":
   version "0.9.46"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.46.tgz#ea701ee34cbb6dfe6d100f1530319547c93c8d79"
@@ -11,6 +26,18 @@
   version "0.3.29"
   resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.3.29.tgz#7f2ad7ec55f914482fc9b1ec4bb1ae6028d46066"
   integrity sha1-fyrX7FX5FEgvybHsS7GuYCjUYGY=
+
+"@types/node-fetch@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.1.4.tgz#093d1beae11541aef25999d70aa09286fd025b1a"
+  integrity sha512-tR1ekaXUGpmzOcDXWU9BW73YfA2/VW1DF1FH+wlJ82BbCSnWTbdX+JkqWQXWKIGsFPnPsYadbXfNgz28g+ccWg==
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*":
+  version "10.12.19"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.19.tgz#ca1018c26be01f07e66ac7fefbeb6407e4490c61"
+  integrity sha512-2NVovndCjJQj6fUUn9jCgpP4WSqr+u1SoUZMZyJkhGeBFsm6dE46l31S7lPUYt9uQ28XI+ibrJA1f5XyH5HNtA==
 
 "@types/node@^9.3.0":
   version "9.6.41"
@@ -33,6 +60,11 @@ arch@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/arch/-/arch-2.1.1.tgz#8f5c2731aa35a30929221bb0640eed65175ec84e"
   integrity sha512-BLM56aPo9vLLFVa8+/+pJLnrZ7QGGTVHWsCwieAWT9o9K8UeGaQbzZbGoabWLOo2ksBCztoXdqBZBplqLDDCSg==
+
+async-limiter@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
+  integrity sha512-jp/uFnooOiO+L211eZOoSyzpOITMXx1rBITauYykG3BRYPu8h0UcxsPNB04RR5vo4Tyz3+ay17tR6JVf9qzYWg==
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -129,6 +161,11 @@ execa@^0.8.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+fp-ts@^1.0.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.13.0.tgz#004803434e6c92021232746a621d3c2429c3d5cc"
+  integrity sha512-QDPtCkuLay+dX3zinnvt0ER+j8mdWZZSpM//DIY3GycgwUTDPBKFD7CxX5DU/mIDstcWqGuuUSrMNtB6MWluCQ==
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -174,6 +211,13 @@ inherits@2:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
+io-ts@^1.7.0:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.7.1.tgz#ae1fb02b21165d37affad376a1dbf58c5f949e00"
+  integrity sha512-V+rO5TIYWTR/3x7v5D0r4MzTzJ6VA0EBCnn4zW2atK8mDiMXqApDLIIMEwiEPWoFWhpVRS9KPwNSI4Qu8iq7GA==
+  dependencies:
+    fp-ts "^1.0.0"
+
 is-stream@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
@@ -188,6 +232,11 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
+
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
 
 lighthouse-logger@^1.0.0:
   version "1.2.0"
@@ -320,6 +369,13 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
+
+ws@^6.1.3:
+  version "6.1.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.1.3.tgz#d2d2e5f0e3c700ef2de89080ebc0ac6e1bf3a72d"
+  integrity sha512-tbSxiT+qJI223AP4iLfQbkbxkwdFcneYinM2+x46Gx2wgvbaOMO36czfdfVUBRTHvzAMRhDd98sA5d/BuWbQdg==
+  dependencies:
+    async-limiter "~1.0.0"
 
 yallist@^2.1.2:
   version "2.1.2"

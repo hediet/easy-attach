@@ -5,10 +5,10 @@
     "name": "Henning Dieterichs"
   },
   "homepage": "https://github.com/hediet/easy-attach",
-  "main": "index.js",
+  "main": "./entries/index.js",
   "license": "MIT",
   "bin": {
-    "easy-attach": "./src/cli.js"
+    "easy-attach": "./dist/cli.entry.js"
   },
   "scripts": {
     "run-example": "node ./example/script.js"
@@ -18,6 +18,12 @@
     "chrome-launcher": "^0.10.5",
     "clipboardy": "^1.2.3",
     "get-port": "^4.1.0",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.3.0",
+    "@hediet/typed-json-rpc": "^0.1.0",
+    "@hediet/typed-json-rpc-websocket": "^0.1.0",
+    "ws": "^6.1.3"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.1.4"
   }
 }

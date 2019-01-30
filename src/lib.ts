@@ -11,8 +11,9 @@ module.exports.debugProcessAndWait = function() {
     process.debugPort = debugPort;
     process._debugProcess(process.pid);
 
-    const uiScript = path.join(__dirname, "./ui.js");
-    child_process.execSync(`node ${uiScript} ${debugPort}`, { stdio: "inherit" });
+    const uiScript = path.join(__dirname, "./ui/entry.js");
+    // for debugging add { stdio: "inherit" }
+    child_process.execSync(`node ${uiScript} ${debugPort}`);
 
     let i = 0;
     // wait a bit so that the dev tools can connect properly

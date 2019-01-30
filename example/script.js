@@ -1,7 +1,7 @@
 
 function obscureFunction(args) {
     // this require call launches the debugger and waits
-    require("../debugger")();
+    require("../")();
     anotherObscureFunction(args.data);
 }
 

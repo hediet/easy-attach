@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const pkg = require('../package.json');
 const clipboardy = require('clipboardy');
 
-const moduleStr = JSON.stringify(path.join(__dirname, "../debugger"));
+const moduleStr = JSON.stringify(path.join(__dirname, "../"));
 const codeToTriggerDebugger = `require(${moduleStr})();`;
 
 console.log(`Easy Attach Version ${pkg.version}.`);

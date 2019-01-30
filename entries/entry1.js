@@ -1,4 +1,4 @@
-const { debugProcessAndWait } = require("../lib");
+const { debugProcessAndWait } = require("../dist/lib");
 
 module.exports = function() {
     debugProcessAndWait();
