@@ -30,18 +30,15 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs) {
 	process.debugPort = debugPort;
 	(process as any)._debugProcess(process.pid);
 
-	// TODO remove const proxyPort = launchProxySync(debugPort);
-
 	const uiScript = join(__dirname, "./ui/entry.js");
-	// for debugging add { stdio: "inherit" }
 	child_process.execSync(
-		`node ${uiScript} ${debugPort} ${label ? JSON.stringify(label) : ""}`,
-		{ stdio: "inherit" }
+		`node ${uiScript} ${debugPort} ${label ? JSON.stringify(label) : ""}`
+		// uncomment when debugging:
+		// { stdio: "inherit" }
 	);
-
-	setInterval(() => {}, 1000);
 
 	let i = 0;
 	// wait a bit so that the dev tools can connect properly
+	// TODO test whether this is still required
 	while (i < 1000000) i++;
 };

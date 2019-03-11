@@ -36,6 +36,7 @@
 	"files": [
 		"dist",
 		"entries",
-		"docs"
+		"docs",
+		"src"
 	]
 }
