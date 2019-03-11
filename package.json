@@ -14,7 +14,8 @@
 		"run-example": "node ./example/script.js"
 	},
 	"dependencies": {
-		"@hediet/std": "^0.1.8",
+		"@hediet/std": "^0.1.10",
+		"vscode-rpc": "^0.2.2",
 		"@types/http-proxy": "^1.17.0",
 		"chalk": "^2.4.2",
 		"chrome-launcher": "^0.10.5",
@@ -23,7 +24,6 @@
 		"http-proxy": "^1.17.0",
 		"node-fetch": "^2.3.0",
 		"simples": "^0.8.8",
-		"vscode-rpc": "^0.2.2",
 		"ws": "^6.1.3"
 	},
 	"devDependencies": {
