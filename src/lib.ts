@@ -21,7 +21,7 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs) {
 	if (!first) {
 		return;
 	}
-	first = true;
+	first = false;
 
 	const label = args ? args.label : undefined;
 
@@ -35,7 +35,7 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs) {
 	const uiScript = join(__dirname, "./ui/entry.js");
 	// for debugging add { stdio: "inherit" }
 	child_process.execSync(
-		`node ${uiScript} ${debugPort} ${JSON.stringify(label)}`,
+		`node ${uiScript} ${debugPort} ${label ? JSON.stringify(label) : ""}`,
 		{ stdio: "inherit" }
 	);
 

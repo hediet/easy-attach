@@ -12,8 +12,6 @@ export async function notifyVsCode(context: AttachContext): Promise<void> {
 		});
 		const server = nodeDebuggerContract.getServer(client.channel, {});
 
-		console.error("port2", context.proxyPort);
-
 		server.nodeDebugTargetBecameAvailable({
 			port: context.proxyPort,
 			name: context.label || null,
