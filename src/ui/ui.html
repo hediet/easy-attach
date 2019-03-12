@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>Easy Attach Breakpoint Triggered</title>
+	</head>
+	<body
+		style="
+            background-color: rgb(240,240,240);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 14;
+            height: 100%; width: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 0; margin: 0; padding: 10px;
+            position: relative;
+            box-sizing: border-box;
+            "
+	>
+		<div style="flex: 1; display: flex;">
+			<textarea id="link" style="flex: 1; width: 100%;">
+${debugUrl}</textarea
+			>
+		</div>
+
+		<div
+			style="flex: 0 auto; display: flex; flex-direction: row-reverse; align-items: center; "
+		>
+			<button onclick="closeWindow()" style="width: 90px; height: 28px">
+				Ignore
+			</button>
+			<div style="width: 10px"></div>
+			<button
+				onclick="copy()"
+				style="width: 90px; height: 28px; white-space: nowrap;"
+			>
+				Copy Link
+			</button>
+			<div style="margin: 10px; margin-right: auto;">
+				Enter this link to the chrome address bar to start debugging.
+			</div>
+		</div>
+
+		<script>
+			link.select();
+			function closeWindow() {
+				window.close();
+			}
+			function copy() {
+				link.select();
+				document.execCommand("copy");
+			}
+		</script>
+	</body>
+</html>

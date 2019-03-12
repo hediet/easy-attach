@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@hediet/std@^0.1.8":
+"@hediet/std@^0.1.10":
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@hediet/std/-/std-0.1.10.tgz#91fa3b6dc348c8c6f48fae45ccf0f2c20dc987e5"
   integrity sha512-rySbARjsRVwIUNyO7aTTZbMWpvz8QL2oxf87eA0MvxIwzOAxIRfs8iRvPyMPKspJxfQu2f4IWTZRog2DcSjH1A==
@@ -17,9 +17,9 @@
     isomorphic-ws "^4.0.1"
 
 "@hediet/typed-json-rpc@^0.3.0":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@hediet/typed-json-rpc/-/typed-json-rpc-0.3.10.tgz#de51dd634150ccbcfbef052d59a8b755d7f2cfe7"
-  integrity sha512-lMMGnD9B6MiGgODajIE+Ljjg0slkupFMonly6USRZX4D5HcWVftJv2Za23GMDj5X9Wa0gRXkYD9O21h85d9hUw==
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/@hediet/typed-json-rpc/-/typed-json-rpc-0.3.11.tgz#d1330fd2c3a033b494b78d719401a8b14f0f4286"
+  integrity sha512-00T9XcDmXzja//jUvUWmKcGiGEKmvDb5B7qDVv/IOtY8jDe1SbHs8HBYp0L3SP1ztndqC7h3dlbXHv9Ri66uJQ==
   dependencies:
     io-ts "^1.7.0"
 
@@ -60,9 +60,9 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "11.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.0.tgz#070e9ce7c90e727aca0e0c14e470f9a93ffe9390"
-  integrity sha512-D5Rt+HXgEywr3RQJcGlZUCTCx1qVbCZpVk3/tOOA6spLNZdGm8BU+zRgdRYDoF1pO3RuXLxADzMrF903JlQXqg==
+  version "11.11.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.1.tgz#9ee55ffce20f72e141863b0036a6e51c6fc09a1f"
+  integrity sha512-2azXFP9n4aA2QNLkKm/F9pzKxgYj1SMawZ5Eh9iC21RH3XNcFsivLVU2NhpMgQm7YobSByvIol4c42ZFusXFHQ==
 
 "@types/node@^9.3.0":
   version "9.6.45"
@@ -219,9 +219,9 @@ follow-redirects@^1.0.0:
     debug "^3.2.6"
 
 fp-ts@^1.0.0:
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.14.3.tgz#48b3aeee6bdda3b24aa44f900ad039813d2c3f01"
-  integrity sha512-tAnefu8QCuPaUaEywmhzpBWbRq2NRcailU5gtV2O09+xXVnJMBIyJi4qXy2fMlhMFsebDqUPpgoHpSErs94HTg==
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.14.4.tgz#df431e1bfe590f23ad418ca8c889880106a5008f"
+  integrity sha512-A20kqVBpV/VOpDmEDudb+FP/qOV+V/yEqHQQfHPHLHeX3alFM0JjX1cXNcU8+p8z5yeCkHFolKo7uJMRwUSMFA==
 
 fs.realpath@^1.0.0:
   version "1.0.0"

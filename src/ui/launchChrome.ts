@@ -7,26 +7,59 @@ import { AddressInfo } from "ws";
 
 function getHtml(debugUrl: string) {
 	return `
-        <html>
-            <head>
-                <title>Easy Attach Breakpoint Triggered</title>
-            </head>
-            <body>
-                <textarea id="link" style="width: 100%; height: 150px">${debugUrl}</textarea>
-                <div style="margin: 10px">
-                    Enter this link into the chrome address bar to start debugging.
-                </div>
-                <div style="display: flex; flex-direction: row-reverse;">
-                    <button onclick="closeWindow()">Close</button>
-                </div>
-                <script>
-                    link.select();
-                    function closeWindow() {
-                        window.close();
-                    }
-                </script>
-            </body>
-        </html>
+<html>
+	<head>
+		<title>Easy Attach Breakpoint Triggered</title>
+	</head>
+	<body
+		style="
+            background-color: rgb(240,240,240);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 14;
+            height: 100%; width: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 0; margin: 0; padding: 10px;
+            position: relative;
+            box-sizing: border-box;
+            "
+	>
+		<div style="flex: 1; display: flex;">
+			<textarea id="link" style="flex: 1; width: 100%;">
+${debugUrl}</textarea
+			>
+		</div>
+
+		<div
+			style="flex: 0 auto; display: flex; flex-direction: row-reverse; align-items: center; "
+		>
+			<button onclick="closeWindow()" style="width: 90px; height: 28px">
+				Ignore
+			</button>
+			<div style="width: 10px"></div>
+			<button
+				onclick="copy()"
+				style="width: 90px; height: 28px; white-space: nowrap;"
+			>
+				Copy Link
+			</button>
+			<div style="margin: 10px; margin-right: auto;">
+				Enter this link to the chrome address bar to start debugging.
+			</div>
+		</div>
+
+		<script>
+			link.select();
+			function closeWindow() {
+				window.close();
+			}
+			function copy() {
+				link.select();
+				document.execCommand("copy");
+			}
+		</script>
+	</body>
+</html>
     `;
 }
 
@@ -57,8 +90,8 @@ export async function launchServer(context: AttachContext) {
 					"http://localhost:" +
 					(server.address() as AddressInfo).port;
 
-				const width = 500;
-				const height = 300;
+				const width = 440;
+				const height = 250;
 				// TODO
 				//const windowX = screenWidth / 2 - width / 2;
 				//const windowY = screenHeight / 2 - height / 2;
@@ -81,7 +114,7 @@ export async function launchServer(context: AttachContext) {
 				chrome.process.on("exit", () => {
 					context.exit();
 				});
-			});
+			} as any);
 
 		context.disposables.push(() => {
 			server.close();
