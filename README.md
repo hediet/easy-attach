@@ -1,6 +1,6 @@
 # Easy Attach
 
-A helper tool that makes launching the debugger to step through obscure js scripts (e.g. webpack configurations) extremly easy.
+A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremly easy.
 
 Like `Debugger.Break()` from C#.
 
@@ -24,6 +24,10 @@ Or if you use npm:
 npm install --global easy-attach
 ```
 
+## Demo
+
+![demo](docs/demo.gif)
+
 ## Usage
 
 Run `easy-attach` to see instructions:
@@ -40,16 +44,6 @@ function obscureFunction(args) {
 }
 ```
 
-When the `require("[...]\\debugger")()` is called, a chrome window is launched with further instructions:
-
-![chrome window](docs/chrome-window.png)
-
-Paste that url into chromes addressbar and debug the obscure script by closing the window:
-
-![chrome window](docs/debug1.png)
-
-From there you can step out and debug your script:
-
-![chrome window](docs/debug2.png)
-
+When the `require("[...]\\debugger")()` is called, a chrome window is launched with further instructions.
+By pasting the displayed link into chrome you can debug your node js application!
 This even works in node repl!
