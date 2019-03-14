@@ -1,5 +1,5 @@
 import child_process = require("child_process");
-import { launchAndWaitForBackgroundProcessSync } from "./background-process";
+import { launchAndWaitForBackgroundProcessSync } from "./background-worker";
 
 export interface EasyAttachArgs {
 	label: string;
