@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const chalk = require('chalk');
-const pkg = require('../package.json');
-const clipboardy = require('clipboardy');
+import { join } from "path";
+import chalk from "chalk";
+import clipboardy = require("clipboardy");
 
-const moduleStr = JSON.stringify(path.join(__dirname, "../"));
+import pkg = require("../package.json");
+
+const moduleStr = JSON.stringify(join(__dirname, "../"));
 const codeToTriggerDebugger = `require(${moduleStr})();`;
 
 console.log(`Easy Attach Version ${pkg.version}.`);

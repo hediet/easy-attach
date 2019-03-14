@@ -47,3 +47,9 @@ function obscureFunction(args) {
 When the `require("[...]\\debugger")()` is called, a chrome window is launched with further instructions.
 By pasting the displayed link into chrome you can debug your node js application!
 This even works in node repl!
+
+You can also pass a label to the call so that you don't mix up various breakpoints:
+
+```js
+require("...\\easy-attach\\debugger")({ label: "Server" });
+```
