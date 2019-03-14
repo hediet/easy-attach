@@ -1,8 +1,33 @@
 import child_process = require("child_process");
-import { join } from "path";
+import { launchAndWaitForBackgroundProcessSync } from "./background-process";
 
 export interface EasyAttachArgs {
 	label: string;
+}
+
+let first = true;
+module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
+	if (!first) {
+		return false;
+	}
+	first = false;
+
+	const label = args ? args.label : undefined;
+	const { debugPort } = initializeDebugPort();
+	launchAndWaitForBackgroundProcessSync(debugPort, label);
+
+	return true;
+};
+
+let debugPort: number | undefined = undefined;
+function initializeDebugPort(): { debugPort: number } {
+	// use a random port for debugPort to prevent port clashes.
+	if (!debugPort) {
+		debugPort = getRandomPortSync();
+		process.debugPort = debugPort;
+		(process as any)._debugProcess(process.pid);
+	}
+	return { debugPort };
 }
 
 function getRandomPortSync(): number {
@@ -14,31 +39,3 @@ function getRandomPortSync(): number {
 	);
 	return parseInt(portStr);
 }
-
-let first = true;
-
-module.exports.debugProcessAndWait = function(args?: EasyAttachArgs) {
-	if (!first) {
-		return;
-	}
-	first = false;
-
-	const label = args ? args.label : undefined;
-
-	// use a random port for debugPort to prevent port clashes.
-	const debugPort = getRandomPortSync();
-	process.debugPort = debugPort;
-	(process as any)._debugProcess(process.pid);
-
-	const uiScript = join(__dirname, "./ui/entry.js");
-	child_process.execSync(
-		`node ${uiScript} ${debugPort} ${label ? JSON.stringify(label) : ""}`
-		// uncomment when debugging:
-		// { stdio: "inherit" }
-	);
-
-	let i = 0;
-	// wait a bit so that the dev tools can connect properly
-	// TODO test whether this is still required
-	while (i < 1000000) i++;
-};

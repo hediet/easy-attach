@@ -5,11 +5,11 @@ import chromeLauncher = require("chrome-launcher");
 import fetch from "node-fetch";
 import { AddressInfo } from "ws";
 
-function getHtml(debugUrl: string) {
+function getHtml(debugUrl: string, label: string | undefined) {
 	return `
 <html>
 	<head>
-		<title>Easy Attach Breakpoint Triggered</title>
+		<title>Easy Attach Breakpoint Triggered${label ? `: ${label}` : ""}</title>
 	</head>
 	<body
 		style="
@@ -34,7 +34,7 @@ ${debugUrl}</textarea
 			style="flex: 0 auto; display: flex; flex-direction: row-reverse; align-items: center; "
 		>
 			<button onclick="closeWindow()" style="width: 90px; height: 28px">
-				Ignore
+				Continue
 			</button>
 			<div style="width: 10px"></div>
 			<button
@@ -71,7 +71,7 @@ export async function launchServer(context: AttachContext) {
 		const json = await data.json();
 
 		let chromeDebugUrl = json[0].devtoolsFrontendUrl as string;
-		// We want to connect to the proxy
+		// We want to connect to the proxy debugger
 		chromeDebugUrl = chromeDebugUrl.replace(
 			context.debuggerPort.toString(),
 			context.proxyPort.toString()
@@ -79,11 +79,11 @@ export async function launchServer(context: AttachContext) {
 
 		// we cannot open `chromeDebugUrl` directly, so open a window instead
 		// prompting to copy that url into to address bar.
-		// For that we need a server.
+		// For that we need an http server.
 		const server = http
 			.createServer((request, response) => {
 				response.writeHead(200, { "Content-Type": "text/html" });
-				response.end(getHtml(chromeDebugUrl));
+				response.end(getHtml(chromeDebugUrl, context.label));
 			})
 			.listen(null, async function(err: any, res: any) {
 				const addr =
@@ -105,10 +105,12 @@ export async function launchServer(context: AttachContext) {
 					],
 				});
 
-				context.disposables.push(() => {
-					if (!chrome.process.killed) {
-						chrome.process.kill();
-					}
+				context.disposables.push({
+					dispose: () => {
+						if (!chrome.process.killed) {
+							chrome.process.kill();
+						}
+					},
 				});
 
 				chrome.process.on("exit", () => {
@@ -116,8 +118,8 @@ export async function launchServer(context: AttachContext) {
 				});
 			} as any);
 
-		context.disposables.push(() => {
-			server.close();
+		context.disposables.push({
+			dispose: () => server.close(),
 		});
 	} catch (exception) {
 		console.log("could not launch chrome: ", exception);

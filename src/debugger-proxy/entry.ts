@@ -1,14 +1,34 @@
 import { AddressInfo } from "net";
-import { StatusInfo } from "./launcher-interface";
+import { debuggerProxyContract } from "./contract";
 import httpProxy = require("http-proxy");
 import WsParser = require("simples/lib/parsers/ws");
+import { TypedChannel } from "@hediet/typed-json-rpc";
+import { NodeJsMessageStream } from "@hediet/typed-json-rpc-streams";
+import { ResettableTimeout } from "@hediet/std/timer";
 
 const args = process.argv.slice(2);
 const debuggerPort = parseInt(args[0]);
 
-function sendStatusInfo(message: StatusInfo) {
-	console.log(JSON.stringify(message));
-}
+const channel = TypedChannel.fromStream(
+	NodeJsMessageStream.connectToThisProcess(),
+	undefined
+);
+
+let clientConnected = false;
+const timeout = new ResettableTimeout(5000);
+timeout.onTimeout.then(() => {
+	// if the "parent" process was killed, but no debugger attached, exit
+	if (!clientConnected) {
+		process.exit();
+	}
+});
+
+const client = debuggerProxyContract.registerServer(channel, {
+	keepAlive: () => {
+		timeout.reset();
+	},
+});
+channel.startListen();
 
 const server = httpProxy.createServer({
 	target: `http://localhost:${debuggerPort}`,
@@ -22,7 +42,8 @@ server.on("proxyReqWs", (proxyReq, req, socket, options) => {
 	parser.on("frame", (frame: { data: any }) => {
 		const content = frame.data.toString("utf8") as string;
 		if (content.indexOf("Runtime.runIfWaitingForDebugger") !== -1) {
-			sendStatusInfo({ kind: "ClientConnected" });
+			clientConnected = true;
+			client.clientConnected({});
 		}
 	});
 
@@ -46,4 +67,4 @@ server._server.on("connection", socket => {
 server.listen(0);
 
 const info = (server as any)._server.address() as AddressInfo;
-sendStatusInfo({ kind: "ServedStarted", port: info.port });
+client.serverStarted({ port: info.port });

@@ -1,6 +1,6 @@
 function obscureFunction(args) {
 	// this require call launches the debugger and waits
-	require("../")();
+	require("../")({ label: "test" });
 	anotherObscureFunction(args.data);
 }
 
