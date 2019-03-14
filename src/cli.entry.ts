@@ -4,8 +4,7 @@ import { join } from "path";
 import chalk from "chalk";
 import clipboardy = require("clipboardy");
 
-import pkg = require("../package.json");
-
+const pkg = require("../package.json");
 const moduleStr = JSON.stringify(join(__dirname, "../"));
 const codeToTriggerDebugger = `require(${moduleStr})();`;
 

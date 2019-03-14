@@ -10,8 +10,9 @@ export function launchAndWaitForBackgroundProcessSync(
 		process.env.DEBUG_EASY_ATTACH === "true"
 			? { stdio: "inherit" as const }
 			: {};
+
 	execSync(
 		`node ${entry} ${debugPort} ${label ? JSON.stringify(label) : ""}`,
-		{ ...extra, windowsHide: true, shell: undefined }
+		{ ...extra }
 	);
 }
