@@ -64,7 +64,7 @@ require("...\\easy-attach\\debugger")({ continue: true });
 
 This sequence diagram roughly describes what is going on:
 
-![sequence-diagram](out/docs/main/Main.png)
+![sequence-diagram](docs/exported/main/Main.png)
 
 ### background-worker
 
