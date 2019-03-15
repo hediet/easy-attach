@@ -42,7 +42,7 @@ export async function notifyVsCode(context: AttachContext): Promise<Result> {
 		return {
 			successful: false,
 			errorMessage:
-				"Could not contact VS Code RPC Server. Did you install the RPC Server extension?",
+				"Could not contact VS Code RPC Server. Did you install the VS Code and the RPC Server extension?",
 			error,
 		};
 	}

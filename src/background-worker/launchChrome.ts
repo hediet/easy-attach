@@ -65,7 +65,7 @@ export async function launchServer(context: AttachContext): Promise<Result> {
 	} catch (error) {
 		return {
 			successful: false,
-			errorMessage: "Could not launch Chrome. Did you install it?",
+			errorMessage: "Could not launch Chrome. Did you install Chrome?",
 			error,
 		};
 	}

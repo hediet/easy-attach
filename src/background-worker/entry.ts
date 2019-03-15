@@ -52,7 +52,7 @@ async function launch(
 			if (result.successful) {
 				continue;
 			}
-			console.error(result.errorMessage);
+			console.error("easy-attach: " + result.errorMessage);
 		}
 	}
 }
