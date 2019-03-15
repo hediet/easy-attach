@@ -3,6 +3,7 @@ import { launchAndWaitForBackgroundProcessSync } from "./background-worker";
 
 export interface EasyAttachArgs {
 	label: string;
+	continue: boolean;
 }
 
 let first = true;
@@ -18,6 +19,10 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
 
 	// Wait a bit so that the dev tools can connect properly.
 	waitSomeCycles();
+
+	if (args && args.continue) {
+		return false;
+	}
 
 	return true;
 };

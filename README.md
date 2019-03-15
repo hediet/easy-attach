@@ -2,7 +2,7 @@
 
 A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.
 
-Like `Debugger.Break()` from C#.
+Like `Debugger.Break()` from C#. Tested for Windows and Linux (Ubuntu).
 
 ## Requirements
 
@@ -52,4 +52,10 @@ You can also pass a label to the call so that you don't mix up various breakpoin
 
 ```js
 require("...\\easy-attach\\debugger")({ label: "Server" });
+```
+
+If you don't want the debugger to halt, you can pass a `continue` flag:
+
+```js
+require("...\\easy-attach\\debugger")({ continue: true });
 ```
