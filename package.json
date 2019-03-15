@@ -24,7 +24,6 @@
 		"chrome-launcher": "^0.10.5",
 		"clipboardy": "^1.2.3",
 		"get-port": "^4.1.0",
-		"http-mitm-proxy": "^0.7.0",
 		"http-proxy": "^1.17.0",
 		"node-fetch": "^2.3.0",
 		"simples": "^0.8.8",

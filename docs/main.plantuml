@@ -1,0 +1,73 @@
+@startuml Main
+
+box "Debugee Process" #LightBlue
+	participant client as "Client"
+	participant lib as "easy attach"
+    participant node as "Node Debug"
+end box
+
+box "NodeJS Process" #WhiteSmoke
+    participant worker as "background-worker"
+end box
+
+box "NodeJs Process" #WhiteSmoke
+    participant dbgProxy as "debugger-proxy"
+end box
+
+participant chrome as "Chrome"
+participant vsCode as "VS Code"
+participant debugger as "Debugger"
+
+activate client
+
+group Publish Debug Target
+    client -> lib: ""require""
+    activate lib
+    lib ->> node: ""_debugProcess""
+    activate node
+    create worker
+    lib -> worker: ""spawnSync""
+    activate worker
+
+    create dbgProxy
+    worker ->> dbgProxy: ""spawn""
+    activate dbgProxy
+    dbgProxy ->> worker: Set Debug Proxy Port
+
+    worker ->> worker: Start UI-Http-Server
+    create chrome
+    worker ->> chrome: Open UI-Url
+    activate chrome
+    worker ->> vsCode: Add Debug Target (Using RPC-Server Extension)
+    activate vsCode
+end
+
+group Accept Debugger
+    debugger ->> dbgProxy: Connects
+    activate debugger
+    dbgProxy -> node: Connects 
+    dbgProxy ->> worker: Client Connected
+
+    worker ->> chrome: kill
+    destroy chrome
+    
+    worker ->> vsCode: Remove Debug Target (Using RPC-Server Extension)
+    deactivate vsCode
+
+    worker --> lib: Exit
+    destroy worker
+end
+group Debugging
+    lib ->> node: ""debugger;""
+    node -> dbgProxy: Trigger Breakpoint
+    dbgProxy ->> debugger: Trigger Breakpoint
+    debugger ->> dbgProxy: Continue
+    dbgProxy ->> node: Continue
+    lib --> client: ""return""
+    deactivate lib
+end
+
+    debugger -> dbgProxy: Disconnects
+    deactivate debugger
+    destroy dbgProxy
+@enduml
