@@ -31,9 +31,9 @@
     isomorphic-ws "^4.0.1"
 
 "@hediet/typed-json-rpc@^0.3.0":
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/@hediet/typed-json-rpc/-/typed-json-rpc-0.3.11.tgz#d1330fd2c3a033b494b78d719401a8b14f0f4286"
-  integrity sha512-00T9XcDmXzja//jUvUWmKcGiGEKmvDb5B7qDVv/IOtY8jDe1SbHs8HBYp0L3SP1ztndqC7h3dlbXHv9Ri66uJQ==
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/@hediet/typed-json-rpc/-/typed-json-rpc-0.3.13.tgz#4ac87755738fa38ca7cdd80b3011e38df73a5b60"
+  integrity sha512-YWerrpP4wbxpHlkEsenbfuVjYfBiu8PczIMIS/UawndgXOL1H2b45vYbcBnpjD/3q/doioGnBQ9Ac5KvGaiEpQ==
   dependencies:
     io-ts "^1.7.0"
 
@@ -400,9 +400,9 @@ inherits@2:
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 io-ts@^1.7.0:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.8.2.tgz#4fe3878c147c9851604d36982ee6f64d3e6a4a1e"
-  integrity sha512-BvP7iC4bgum5e3Fh82xCUrKWt739osKjmQBMORGij2AOMfTmevj8SEqBhN8EeI0GEwIMHb2bXe4fuikN0lsTWg==
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.8.3.tgz#b617159ad030b5c85e14192ffbf24dd054030b38"
+  integrity sha512-zrZRpGNqbuMu8LWJ7lNNQpgdjIiOsNsIfzk8CJpeuVmdnNExGBpb5Wwtp+G9gmMOzLqj4+iFA7+HiFGLzqgBFQ==
   dependencies:
     fp-ts "^1.0.0"
 

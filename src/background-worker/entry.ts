@@ -1,6 +1,6 @@
 import { notifyVsCode } from "./notifyVsCode";
 import { launchServer } from "./launchChrome";
-import { AttachContext } from "./attachContext";
+import { AttachContext, Result } from "./attachContext";
 import { EventSource } from "@hediet/std/events";
 import { Disposable, dispose } from "@hediet/std/disposable";
 import { launchProxyServer } from "../debugger-proxy";
@@ -13,7 +13,7 @@ launchProxyServer(debuggerPort).then(data => {
 	launch(data.port, data.onClientConnected, data.signalExit);
 });
 
-function launch(
+async function launch(
 	proxyPort: number,
 	onClientConnected: EventSource,
 	exited: () => void
@@ -35,8 +35,24 @@ function launch(
 		disposables,
 		exit,
 		label,
+		log: (message: string) => {
+			if (process.env.DEBUG_EASY_ATTACH) {
+				console.log(message);
+			}
+		},
 	};
 
-	notifyVsCode(context);
-	launchServer(context);
+	const promises = new Array<Promise<Result>>();
+	promises.push(notifyVsCode(context));
+	promises.push(launchServer(context));
+
+	const results = await Promise.all(promises);
+	if (results.every(r => !r.successful)) {
+		for (const result of results) {
+			if (result.successful) {
+				continue;
+			}
+			console.error(result.errorMessage);
+		}
+	}
 }

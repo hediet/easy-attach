@@ -9,11 +9,6 @@ import { ResettableTimeout } from "@hediet/std/timer";
 const args = process.argv.slice(2);
 const debuggerPort = parseInt(args[0]);
 
-const channel = TypedChannel.fromStream(
-	NodeJsMessageStream.connectToThisProcess(),
-	undefined
-);
-
 let clientConnected = false;
 const timeout = new ResettableTimeout(5000);
 timeout.onTimeout.then(() => {
@@ -23,12 +18,15 @@ timeout.onTimeout.then(() => {
 	}
 });
 
-const client = debuggerProxyContract.registerServer(channel, {
-	keepAlive: () => {
-		timeout.reset();
-	},
-});
-channel.startListen();
+const { client } = debuggerProxyContract.registerServerToStream(
+	NodeJsMessageStream.connectToThisProcess(),
+	undefined,
+	{
+		keepAlive: () => {
+			timeout.reset();
+		},
+	}
+);
 
 const server = httpProxy.createServer({
 	target: `http://localhost:${debuggerPort}`,

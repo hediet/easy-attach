@@ -6,4 +6,15 @@ export interface AttachContext {
 	disposables: Disposable[];
 	label: string | undefined;
 	exit: () => void;
+	log: (message: string) => void;
 }
+
+export type Result =
+	| {
+			successful: true;
+	  }
+	| {
+			successful: false;
+			errorMessage: string;
+			error?: any;
+	  };

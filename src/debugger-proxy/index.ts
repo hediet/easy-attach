@@ -30,26 +30,26 @@ export function launchProxyServer(
 			console.error("closed", e);
 		});
 
-		const channel = TypedChannel.fromStream(
-			NodeJsMessageStream.connectToProcess(proc),
-			undefined
-		);
 		let keepAliveTimer: Disposable;
-		const client = debuggerProxyContract.getServer(channel, {
-			serverStarted: ({ port }) => {
-				resolve({
-					port,
-					onClientConnected: onClientConnected.asEvent(),
-					signalExit: () => {
-						keepAliveTimer.dispose();
-					},
-				});
-			},
-			clientConnected: () => onClientConnected.emit(undefined, undefined),
-		});
-		channel.startListen();
+		const { server } = debuggerProxyContract.getServerFromStream(
+			NodeJsMessageStream.connectToProcess(proc),
+			undefined,
+			{
+				serverStarted: ({ port }) => {
+					resolve({
+						port,
+						onClientConnected: onClientConnected.asEvent(),
+						signalExit: () => {
+							keepAliveTimer.dispose();
+						},
+					});
+				},
+				clientConnected: () =>
+					onClientConnected.emit(undefined, undefined),
+			}
+		);
 		keepAliveTimer = startInterval(1000, () => {
-			client.keepAlive({});
+			server.keepAlive({});
 		});
 
 		proc.stderr!.on("data", chunk => {

@@ -16,10 +16,14 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
 	const { debugPort } = initializeDebugPort();
 	launchAndWaitForBackgroundProcessSync(debugPort, label);
 
+	// Wait a bit so that the dev tools can connect properly.
+	waitSomeCycles();
+
 	return true;
 };
 
 let debugPort: number | undefined = undefined;
+
 function initializeDebugPort(): { debugPort: number } {
 	// use a random port for debugPort to prevent port clashes.
 	if (!debugPort) {
@@ -38,4 +42,9 @@ function getRandomPortSync(): number {
 		{ cwd: __dirname, encoding: "utf8" }
 	);
 	return parseInt(portStr);
+}
+
+function waitSomeCycles() {
+	let i = 0;
+	while (i < 1000000) i++;
 }

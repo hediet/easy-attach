@@ -4,6 +4,7 @@
 	"author": {
 		"name": "Henning Dieterichs"
 	},
+	"description": "A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.",
 	"homepage": "https://github.com/hediet/easy-attach",
 	"main": "./entries/index.js",
 	"license": "MIT",
@@ -15,7 +16,8 @@
 		"dev": "tsc --watch"
 	},
 	"dependencies": {
-		"@hediet/std": "^0.1.10",
+		"@hediet/std": "^0.1.12",
+		"@hediet/typed-json-rpc": "^0.3.13",
 		"@hediet/typed-json-rpc-streams": "^0.3.1",
 		"@types/http-proxy": "^1.17.0",
 		"chalk": "^2.4.2",
