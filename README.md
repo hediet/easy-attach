@@ -6,7 +6,7 @@ Like `Debugger.Break()` from C#. Tested for Windows and Linux (Ubuntu).
 
 ## Requirements
 
--   You need Chrome or VS Code with [the RPC Server extension]() to be installed.
+-   You need Chrome or VS Code with [the RPC Server extension](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-rpc-server) to be installed.
 
 This package is developed and tested on windows but should work on linux as well.
 
