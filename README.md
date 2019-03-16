@@ -2,13 +2,13 @@
 
 A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.
 
-Like `Debugger.Break()` from C#. Tested for Windows and Linux (Ubuntu).
+Like `Debugger.Break()` from C#.
 
 ## Requirements
 
 -   You need Chrome or VS Code with [the RPC Server extension](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-rpc-server) to be installed.
 
-This package is developed and tested on windows but should work on linux as well.
+Developed on Windows, tested on Windows and Linux.
 
 ## Installation
 
