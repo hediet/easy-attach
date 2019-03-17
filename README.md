@@ -2,7 +2,7 @@
 
 A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.
 
-Like `Debugger.Break()` from C#.
+Like `Debugger.Break()` from C#. All that `debugger;` should be in NodeJS.
 
 ## Requirements
 
