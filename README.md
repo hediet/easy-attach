@@ -2,7 +2,14 @@
 
 A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.
 
-Like `Debugger.Break()` from C#. All that `debugger;` should be in NodeJS.
+Like `Debugger.Break()` from C#. Everything the `debugger;` statement should be.
+
+## Why `debugger;` doesn't do it
+`debugger;` does nothing if no debugger is attached.
+
+This means you have to either launch the process in debug mode from the start (which is complicated if you don't control how the process is launched) or be quick to attach it before the line you want to break at is executed.
+
+With this project you can just paste one line and it will launch a debugger of your choice (VSCode or Chrome) while suspending the running process, regardless of how it was started.
 
 ## Requirements
 
@@ -75,7 +82,7 @@ Thus, we cannot use the event loop of the debugee and have to spawn a new proces
 
 The debugger-proxy is used to inform the background-worker that a debugger has attached.
 There seems to be no other way.
-Care has to be taken that is exits neither to early nor never.
+Care has to be taken that is exits neither too early nor never.
 
 ## Used Dependencies
 
