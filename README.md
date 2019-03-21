@@ -69,7 +69,9 @@ require("...\\easy-attach\\debugger")({ continue: true });
 
 ## Design Notes
 
-This sequence diagram roughly describes what is going on:
+Actually, going from `debugger;` to C#'s `Debugger.Break()` was unexpectedly easy (in terms of a node js developer).
+
+This sequence diagram roughly describes what is needed for that little upgrade:
 
 ![sequence-diagram](docs/exported/main/Main.png)
 
