@@ -1,6 +1,6 @@
 # Easy Attach
 
-A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.
+A helper tool that makes launching the debugger to step through node applications where the entry point is unclear (e.g. webpack configurations) extremely easy.
 
 Like `Debugger.Break()` from C#. Everything the `debugger;` statement should be.
 
