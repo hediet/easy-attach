@@ -5,6 +5,7 @@ A helper tool that makes launching the debugger to step through node application
 Like `Debugger.Break()` from C#. Everything the `debugger;` statement should be.
 
 ## Why `debugger;` doesn't do it
+
 `debugger;` does nothing if no debugger is attached.
 
 This means you have to either launch the process in debug mode from the start (which is complicated if you don't control how the process is launched) or be quick to attach it before the line you want to break at is executed.
@@ -65,6 +66,49 @@ If you don't want the debugger to halt, you can pass a `continue` flag:
 
 ```js
 require("...\\easy-attach\\debugger")({ continue: true });
+```
+
+## Flags
+
+You can specify flags by passing an object:
+
+```js
+require("...\\easy-attach\\debugger")({ ...flags });
+```
+
+These flags are supported:
+
+```ts
+export interface EasyAttachArgs {
+	/**
+	 * Sets a label for the debug target.
+	 */
+	label?: string;
+	/**
+	 * If enabled, it does not break after attaching the debugger.
+	 */
+	continue?: boolean;
+	/**
+	 * Specifies the port to use for the debug port.
+	 * Use `preconfigured` when the debugger was already launched.
+	 */
+	debugPort?: DebugPortConfig;
+	/**
+	 * Specifies the port to use for the debug proxy.
+	 * This is usefull if you want to forward this port.
+	 */
+	debugProxyPort?: PortConfig;
+	/**
+	 * Use this option when the debug proxy does not recognize connection attempts and does not close automatically.
+	 */
+	eagerExitDebugProxy?: boolean;
+	/**
+	 * Print logs from background worker.
+	 */
+	logBackgroundWorker?: boolean;
+}
+export type PortConfig = "random" | number | number[];
+export type DebugPortConfig = PortConfig | "preconfigured";
 ```
 
 ## Design Notes

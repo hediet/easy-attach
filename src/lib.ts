@@ -1,9 +1,6 @@
 import child_process = require("child_process");
 import { launchAndWaitForBackgroundProcessSync } from "./background-worker";
 
-export type PortConfig = "random" | number | number[];
-export type DebugPortConfig = PortConfig | "preconfigured";
-
 export interface EasyAttachArgs {
 	/**
 	 * Sets a label for the debug target.
@@ -24,7 +21,7 @@ export interface EasyAttachArgs {
 	 */
 	debugProxyPort?: PortConfig;
 	/**
-	 * Use this option when the debug proxy does not recognize connection attempts.
+	 * Use this option when the debug proxy does not recognize connection attempts and does not close automatically.
 	 */
 	eagerExitDebugProxy?: boolean;
 	/**
@@ -32,6 +29,9 @@ export interface EasyAttachArgs {
 	 */
 	logBackgroundWorker?: boolean;
 }
+
+export type PortConfig = "random" | number | number[];
+export type DebugPortConfig = PortConfig | "preconfigured";
 
 let first = true;
 module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
