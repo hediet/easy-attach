@@ -2,12 +2,12 @@ import { AddressInfo } from "net";
 import { debuggerProxyContract } from "./contract";
 import httpProxy = require("http-proxy");
 import WsParser = require("simples/lib/parsers/ws");
-import { TypedChannel } from "@hediet/typed-json-rpc";
 import { NodeJsMessageStream } from "@hediet/typed-json-rpc-streams";
 import { ResettableTimeout } from "@hediet/std/timer";
+import { DebuggerProxyArgs } from ".";
+import getPort from "get-port";
 
-const args = process.argv.slice(2);
-const debuggerPort = parseInt(args[0]);
+const argsObj = JSON.parse(process.argv[2]) as DebuggerProxyArgs;
 
 let clientConnected = false;
 const timeout = new ResettableTimeout(5000);
@@ -28,20 +28,30 @@ const { client } = debuggerProxyContract.registerServerToStream(
 	}
 );
 
+function handleClientConnected() {
+	if (!clientConnected) {
+		clientConnected = true;
+		client.clientConnected({});
+	}
+}
+
 const server = httpProxy.createServer({
-	target: `http://localhost:${debuggerPort}`,
+	target: `http://localhost:${argsObj.debugPort}`,
 	ws: true,
 });
 
 server.on("proxyReqWs", (proxyReq, req, socket, options) => {
+	if (argsObj.eagerExit) {
+		handleClientConnected();
+	}
+
 	const parser = new WsParser(0, false);
 	socket.pipe(parser);
 
 	parser.on("frame", (frame: { data: any }) => {
 		const content = frame.data.toString("utf8") as string;
 		if (content.indexOf("Runtime.runIfWaitingForDebugger") !== -1) {
-			clientConnected = true;
-			client.clientConnected({});
+			handleClientConnected();
 		}
 	});
 
@@ -62,7 +72,18 @@ server._server.on("connection", socket => {
 });
 */
 
-server.listen(0);
+async function run() {
+	let port: number;
+	if (argsObj.debugProxyPortConfig === "random") {
+		port = 0;
+	} else {
+		port = await getPort({ port: argsObj.debugProxyPortConfig });
+	}
 
-const info = (server as any)._server.address() as AddressInfo;
-client.serverStarted({ port: info.port });
+	server.listen(port);
+
+	const info = (server as any)._server.address() as AddressInfo;
+	client.serverStarted({ port: info.port });
+}
+
+run();

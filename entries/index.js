@@ -7,6 +7,5 @@ function randomInt(min, max) {
 const randomIndex = randomInt(0, entries.length - 1);
 
 // choose a random quote.
-/** @type {(arg: import("../src/lib").EasyAttachArgs) => void} */
 const entry = entries[randomIndex];
 module.exports = entry;

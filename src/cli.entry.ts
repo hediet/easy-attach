@@ -12,7 +12,12 @@ console.log(`Easy Attach Version ${pkg.version}.`);
 console.log();
 console.log("Use this code to trigger a breakpoint:");
 console.log(chalk.blue(codeToTriggerDebugger));
-console.log("(Pasted into your clipboard)");
-console.log();
 
-clipboardy.writeSync(codeToTriggerDebugger);
+try {
+	clipboardy.writeSync(codeToTriggerDebugger);
+	console.log("(Copied to clipboard)");
+} catch (e) {
+	console.error(chalk.red(`Could not copy to clipboard: ${e.toString()}`));
+}
+
+console.log();

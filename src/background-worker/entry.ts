@@ -4,12 +4,15 @@ import { AttachContext, Result } from "./attachContext";
 import { EventSource } from "@hediet/std/events";
 import { Disposable, dispose } from "@hediet/std/disposable";
 import { launchProxyServer } from "../debugger-proxy";
+import { BackgroundWorkerArgs } from ".";
 
-const args = process.argv.slice(2);
-const debuggerPort = parseInt(args[0]);
-const label = args.length > 1 ? args[1] : undefined;
+const argsObj = JSON.parse(process.argv[2]) as BackgroundWorkerArgs;
 
-launchProxyServer(debuggerPort).then(data => {
+launchProxyServer({
+	debugPort: argsObj.debugPort,
+	eagerExit: argsObj.eagerExitDebugProxy,
+	debugProxyPortConfig: argsObj.debugProxyPortConfig,
+}).then(data => {
 	launch(data.port, data.onClientConnected, data.signalExit);
 });
 
@@ -30,13 +33,13 @@ async function launch(
 	});
 
 	const context: AttachContext = {
-		debuggerPort,
+		debuggerPort: argsObj.debugPort,
 		proxyPort,
 		disposables,
 		exit,
-		label,
+		label: argsObj.label,
 		log: (message: string) => {
-			if (process.env.DEBUG_EASY_ATTACH) {
+			if (process.env.DEBUG_EASY_ATTACH || argsObj.log) {
 				console.log(message);
 			}
 		},

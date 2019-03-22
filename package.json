@@ -1,12 +1,13 @@
 {
 	"name": "easy-attach",
-	"version": "0.15.3",
+	"version": "0.16.0",
 	"author": {
 		"name": "Henning Dieterichs"
 	},
 	"description": "A helper tool that makes launching the debugger to step through obscure node-js scripts (e.g. webpack configurations) extremely easy.",
 	"homepage": "https://github.com/hediet/easy-attach",
 	"main": "./entries/index.js",
+	"types": "./entries/index.d.ts",
 	"license": "MIT",
 	"bin": {
 		"easy-attach": "./dist/cli.entry.js"

@@ -1,14 +1,22 @@
 import { join } from "path";
 import { spawnSync } from "child_process";
+import { PortConfig } from "../lib";
+
+export interface BackgroundWorkerArgs {
+	debugPort: number;
+	label: string | undefined;
+	eagerExitDebugProxy: boolean;
+	log: boolean;
+	debugProxyPortConfig: PortConfig;
+}
 
 export function launchAndWaitForBackgroundProcessSync(
-	debugPort: number,
-	label: string | undefined
+	args: BackgroundWorkerArgs
 ) {
 	const entry = join(__dirname, "./entry.js");
-	spawnSync(
-		"node",
-		[`${entry}`, debugPort.toString(), label ? JSON.stringify(label) : ""],
-		{ stdio: "inherit", shell: true, windowsHide: true }
-	);
+	spawnSync("node", [`${entry}`, JSON.stringify(args)], {
+		stdio: "inherit",
+		shell: false,
+		windowsHide: true,
+	});
 }
