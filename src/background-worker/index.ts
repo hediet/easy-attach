@@ -8,6 +8,7 @@ export interface BackgroundWorkerArgs {
 	eagerExitDebugProxy: boolean;
 	log: boolean;
 	debugProxyPortConfig: PortConfig;
+	showUi: boolean;
 }
 
 export function launchAndWaitForBackgroundProcessSync(

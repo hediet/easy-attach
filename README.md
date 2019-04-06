@@ -82,31 +82,42 @@ These flags are supported:
 export interface EasyAttachArgs {
 	/**
 	 * Sets a label for the debug target.
+	 * Defaults to `undefined`..
 	 */
 	label?: string;
 	/**
 	 * If enabled, it does not break after attaching the debugger.
+	 * Defaults to `false`.
 	 */
 	continue?: boolean;
 	/**
 	 * Specifies the port to use for the debug port.
 	 * Use `preconfigured` when the debugger was already launched.
+	 * Defaults to `random`;
 	 */
 	debugPort?: DebugPortConfig;
 	/**
 	 * Specifies the port to use for the debug proxy.
 	 * This is usefull if you want to forward this port.
+	 * Defaults to `random`;
 	 */
 	debugProxyPort?: PortConfig;
 	/**
-	 * Use this option when the debug proxy does not recognize connection attempts and does not close automatically.
+	 * Use this option when the debug proxy does not recognize connection attempts and does not close automatically. Defaults to `false`.
 	 */
 	eagerExitDebugProxy?: boolean;
 	/**
-	 * Print logs from background worker.
+	 * Print logs from background worker. Defaults to `false`.
 	 */
 	logBackgroundWorker?: boolean;
+	/**
+	 * Use this option to control whether the UI is shown.
+	 * If only the VS Code Extension is used, disabling the UI speeds up the auto attach feature.
+	 * Defaults to `true`.
+	 */
+	showUI?: boolean;
 }
+
 export type PortConfig = "random" | number | number[];
 export type DebugPortConfig = PortConfig | "preconfigured";
 ```

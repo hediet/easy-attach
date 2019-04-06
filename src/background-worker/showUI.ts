@@ -5,7 +5,7 @@ import { AddressInfo } from "ws";
 import { Barrier } from "@hediet/std/synchronization";
 import { AttachContext, Result } from "./attachContext";
 
-export async function launchServer(context: AttachContext): Promise<Result> {
+export async function showUI(context: AttachContext): Promise<Result> {
 	let chromeDebugUrl: string;
 	try {
 		const data = await fetch(

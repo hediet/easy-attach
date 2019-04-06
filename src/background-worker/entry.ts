@@ -1,5 +1,5 @@
 import { notifyVsCode } from "./notifyVsCode";
-import { launchServer } from "./launchChrome";
+import { showUI } from "./showUI";
 import { AttachContext, Result } from "./attachContext";
 import { EventSource } from "@hediet/std/events";
 import { Disposable, dispose } from "@hediet/std/disposable";
@@ -47,7 +47,9 @@ async function launch(
 
 	const promises = new Array<Promise<Result>>();
 	promises.push(notifyVsCode(context));
-	promises.push(launchServer(context));
+	if (argsObj.showUi) {
+		promises.push(showUI(context));
+	}
 
 	const results = await Promise.all(promises);
 	if (results.every(r => !r.successful)) {
