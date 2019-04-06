@@ -5,7 +5,7 @@ import WsParser = require("simples/lib/parsers/ws");
 import { NodeJsMessageStream } from "@hediet/typed-json-rpc-streams";
 import { ResettableTimeout } from "@hediet/std/timer";
 import { DebuggerProxyArgs } from ".";
-import getPort from "get-port";
+import getPort = require("get-port");
 
 const argsObj = JSON.parse(process.argv[2]) as DebuggerProxyArgs;
 
