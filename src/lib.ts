@@ -67,11 +67,11 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
 			log = args.logBackgroundWorker;
 		}
 
-		if (args.debugProxyPort) {
+		if (args.debugProxyPort !== undefined) {
 			debugProxyPortConfig = args.debugProxyPort;
 		}
 
-		if (args.showUI) {
+		if (args.showUI !== undefined) {
 			showUi = args.showUI;
 		}
 	}
