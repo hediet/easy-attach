@@ -1,5 +1,7 @@
 # Easy Attach
 
+[![](https://img.shields.io/twitter/follow/hediet_dev.svg?style=social)](https://twitter.com/intent/follow?screen_name=hediet_dev)
+
 A helper tool that makes launching the debugger to step through node applications where the entry point is unclear (e.g. webpack configurations) extremely easy.
 
 Like `Debugger.Break()` from C#. Everything the `debugger;` statement should be.
