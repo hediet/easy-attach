@@ -181,3 +181,10 @@ To find free ports:
 ## Known Problems
 
 -   Sometimes, when launchend, the background-worker appears for a short moment as black terminal window. I don't know why.
+
+# Changelog
+
+-   2.0.0
+    -   Migrated from `_debugProcess` to `inspector.open`. This solves some race conditions.
+    -   Removed debug entry points.
+    -   Uses debug API to automatically step out or continue.

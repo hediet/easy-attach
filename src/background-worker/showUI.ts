@@ -4,6 +4,8 @@ import fetch from "node-fetch";
 import { AddressInfo } from "ws";
 import { Barrier } from "@hediet/std/synchronization";
 import { AttachContext, Result } from "./attachContext";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export async function showUI(context: AttachContext): Promise<Result> {
 	let chromeDebugUrl: string;
@@ -34,7 +36,7 @@ export async function showUI(context: AttachContext): Promise<Result> {
 		// For that we need an http server.
 		const serverListening = new Barrier();
 		const server = http
-			.createServer((request, response) => {
+			.createServer((_request, response) => {
 				response.writeHead(200, { "Content-Type": "text/html" });
 				response.end(getHtml(chromeDebugUrl, context.label));
 			})
@@ -72,61 +74,24 @@ export async function showUI(context: AttachContext): Promise<Result> {
 }
 
 function getHtml(debugUrl: string, label: string | undefined) {
-	return `
-<html>
-	<head>
-		<title>Easy Attach Breakpoint Triggered${label ? `: ${label}` : ""}</title>
-	</head>
-	<body
-		style="
-            background-color: rgb(240,240,240);
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 14;
-            height: 100%; width: 100%;
-            display: flex;
-            flex-direction: column;
-            border: 0; margin: 0; padding: 10px;
-            position: relative;
-            box-sizing: border-box;
-            "
-	>
-		<div style="flex: 1; display: flex;">
-			<textarea id="link" style="flex: 1; width: 100%;">
-${debugUrl}</textarea
-			>
-		</div>
+	const html = readFileSync(join(__dirname, "../../assets/ui.html"), {
+		encoding: "utf-8",
+	});
+	const tpl = new SimpleTemplate<{ debugUrl: string; caption: string }>(html);
+	const caption = `Easy Attach Breakpoint Triggered${
+		label ? `: ${label}` : ""
+	}`;
+	return tpl.render({ debugUrl, caption });
+}
 
-		<div
-			style="flex: 0 auto; display: flex; flex-direction: row-reverse; align-items: center; "
-		>
-			<button onclick="closeWindow()" style="width: 90px; height: 28px">
-				Continue
-			</button>
-			<div style="width: 10px"></div>
-			<button
-				onclick="copy()"
-				style="width: 90px; height: 28px; white-space: nowrap;"
-			>
-				Copy Link
-			</button>
-			<div style="margin: 10px; margin-right: auto;">
-				Enter this link to the chrome address bar to start debugging.
-			</div>
-		</div>
+class SimpleTemplate<T extends Record<string, string>> {
+	constructor(private readonly str: string) {}
 
-		<script>
-			link.select();
-			function closeWindow() {
-				window.close();
-			}
-			function copy() {
-				link.select();
-				document.execCommand("copy");
-			}
-		</script>
-	</body>
-</html>
-    `;
+	render(data: T): string {
+		return this.str.replace(/\$\{([a-zA-Z0-9]+)\}/g, (substr, grp1) => {
+			return data[grp1];
+		});
+	}
 }
 
 async function launchChrome(url: string, context: AttachContext) {

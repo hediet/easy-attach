@@ -3,7 +3,7 @@
 box "Debugee Process" #LightBlue
 	participant client as "Client"
 	participant lib as "easy attach"
-    participant node as "Node Debug"
+    participant node as "Node Runtime"
 end box
 
 box "NodeJS Process" #WhiteSmoke
@@ -23,11 +23,22 @@ activate client
 group Publish Debug Target
     client -> lib: ""require""
     activate lib
-    lib ->> node: ""_debugProcess""
-    activate node
+
     create worker
-    lib -> worker: ""spawnSync""
+    lib ->> worker: ""spawn""
     activate worker
+
+    lib -> node: ""inspector.open""
+    activate node
+
+    worker ->> node: Attach Debugger
+    node --> lib: returns
+
+    lib -> node: ""debugger;""
+    node ->> worker: Paused
+    worker ->> node: Step out
+    lib --> client: ""return""
+    deactivate lib
 
     create dbgProxy
     worker ->> dbgProxy: ""spawn""
@@ -45,8 +56,10 @@ end
 group Accept Debugger
     debugger ->> dbgProxy: Connects
     activate debugger
-    dbgProxy -> node: Connects 
+    dbgProxy ->> node: Connects 
     dbgProxy ->> worker: Client Connected
+
+    worker ->> node: Detach Debugger
 
     worker ->> chrome: kill
     destroy chrome
@@ -54,17 +67,11 @@ group Accept Debugger
     worker ->> vsCode: Remove Debug Target (Using RPC-Server Extension)
     deactivate vsCode
 
-    worker --> lib: Exit
     destroy worker
 end
 group Debugging
-    lib ->> node: ""debugger;""
-    node -> dbgProxy: Trigger Breakpoint
-    dbgProxy ->> debugger: Trigger Breakpoint
     debugger ->> dbgProxy: Continue
     dbgProxy ->> node: Continue
-    lib --> client: ""return""
-    deactivate lib
 end
 
     debugger -> dbgProxy: Disconnects

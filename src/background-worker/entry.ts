@@ -1,8 +1,9 @@
 import { notifyVsCode } from "./notifyVsCode";
 import { showUI } from "./showUI";
-import { AttachContext, Result } from "./attachContext";
+import { AttachContext, Result, Resource } from "./attachContext";
 import { EventSource } from "@hediet/std/events";
-import { Disposable, dispose } from "@hediet/std/disposable";
+import { Disposable } from "@hediet/std/disposable";
+import { wait } from "@hediet/std/timer";
 import { launchProxyServer } from "../debugger-proxy";
 import { BackgroundWorkerArgs } from ".";
 
@@ -21,22 +22,30 @@ async function launch(
 	onClientConnected: EventSource,
 	exited: () => void
 ) {
-	const disposables = new Array<Disposable>();
-	function exit() {
-		dispose(disposables);
+	const disposables = new Array<Resource | Disposable>();
+	async function exit(debuggerConnected: boolean) {
+		for (const d of disposables) {
+			if ("disposeAsync" in d) {
+				await d.disposeAsync(debuggerConnected);
+			} else {
+				d.dispose();
+			}
+		}
 		exited();
 		process.exit();
 	}
 
 	onClientConnected.one(() => {
-		exit();
+		exit(true);
 	});
+
+	disposables.push(await attachDebugger(argsObj.shouldContinue));
 
 	const context: AttachContext = {
 		debuggerPort: argsObj.debugPort,
 		proxyPort,
 		disposables,
-		exit,
+		exit: () => exit(false),
 		label: argsObj.label,
 		log: (message: string) => {
 			if (process.env.DEBUG_EASY_ATTACH || argsObj.log) {
@@ -59,5 +68,45 @@ async function launch(
 			}
 			console.error("easy-attach: " + result.errorMessage);
 		}
+	}
+}
+
+async function attachDebugger(shouldContinue: boolean): Promise<Resource> {
+	try {
+		const CDP = require("chrome-remote-interface");
+		const client = await CDP({
+			port: argsObj.debugPort,
+			local: true,
+		});
+		const { Debugger, Runtime } = client;
+		let first = true;
+		client.on("event", async (message: any) => {
+			if (first && message.method === "Debugger.paused") {
+				first = false;
+				try {
+					await Debugger.stepOut();
+				} catch (e) {
+					console.error("Error at Debugger.stepOut", e);
+				}
+			}
+		});
+		await Debugger.enable();
+		await Runtime.runIfWaitingForDebugger();
+
+		return {
+			async disposeAsync(clientConnected: boolean): Promise<void> {
+				if (shouldContinue && clientConnected) {
+					await wait(500);
+					await Debugger.resume();
+				}
+				await Debugger.disable();
+				await client.close();
+			},
+		};
+	} catch (e) {
+		console.error("err", e);
+		return {
+			async disposeAsync(): Promise<void> {},
+		};
 	}
 }

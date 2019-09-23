@@ -40,6 +40,10 @@ const server = httpProxy.createServer({
 	ws: true,
 });
 
+server.on("error", e => {
+	console.error("debugger-proxy-error", e);
+});
+
 server.on("proxyReqWs", (proxyReq, req, socket, options) => {
 	if (argsObj.eagerExit) {
 		handleClientConnected();

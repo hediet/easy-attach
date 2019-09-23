@@ -1,5 +1,6 @@
 {
 	"plantuml.diagramsRoot": "docs",
 	"plantuml.exportFormat": "png",
-	"plantuml.exportOutDir": "docs/exported"
+	"plantuml.exportOutDir": "docs/exported",
+	"rpcServer.nodeDebugger.autoAttachLabels": ["test"]
 }

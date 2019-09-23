@@ -1,5 +1,6 @@
 import child_process = require("child_process");
-import { launchAndWaitForBackgroundProcessSync } from "./background-worker";
+import { launchBackgroundProcess } from "./background-worker";
+import * as inspector from "inspector";
 
 export interface EasyAttachArgs {
 	/**
@@ -44,7 +45,7 @@ export type PortConfig = "random" | number | number[];
 export type DebugPortConfig = PortConfig | "preconfigured";
 
 let first = true;
-module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
+export function debugProcessAndWait(args?: EasyAttachArgs): boolean {
 	if (!first) {
 		return false;
 	}
@@ -56,6 +57,7 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
 	let eagerExitDebugProxy = false;
 	let log = false;
 	let showUi = true;
+	let shouldContinue = false;
 
 	if (args) {
 		label = args.label;
@@ -74,27 +76,27 @@ module.exports.debugProcessAndWait = function(args?: EasyAttachArgs): boolean {
 		if (args.showUI !== undefined) {
 			showUi = args.showUI;
 		}
+		if (args.continue !== undefined) {
+			shouldContinue = args.continue;
+		}
 	}
 
 	const { debugPort } = initializeDebugPort(debugPortConfig);
-	launchAndWaitForBackgroundProcessSync({
+
+	launchBackgroundProcess({
 		debugPort,
 		label,
 		log,
 		eagerExitDebugProxy,
 		debugProxyPortConfig,
 		showUi,
+		shouldContinue,
 	});
-
-	// Wait a bit so that the dev tools can connect properly.
-	waitSomeCycles();
-
-	if (args && args.continue) {
-		return false;
-	}
+	// Wait for debugger to connect.
+	inspector.open(undefined, undefined, true);
 
 	return true;
-};
+}
 
 let debugPort: number | undefined = undefined;
 
@@ -115,8 +117,6 @@ function initializeDebugPort(
 			}
 			process.debugPort = debugPort;
 		}
-
-		(process as any)._debugProcess(process.pid);
 	}
 	return { debugPort };
 }
@@ -137,9 +137,4 @@ function getRandomPortSync(allowedPorts?: number[]): number {
 	const port = parseInt(portStr);
 	// It could be that `port` is not from `allowedPorts` as they are only preferences.
 	return port;
-}
-
-function waitSomeCycles() {
-	let i = 0;
-	while (i < 10000000) i++;
 }

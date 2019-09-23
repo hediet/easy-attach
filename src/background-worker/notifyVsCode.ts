@@ -30,8 +30,8 @@ export async function notifyVsCode(context: AttachContext): Promise<Result> {
 		});
 
 		context.disposables.push({
-			dispose: () => {
-				server.removeNodeDebugTarget({ targetId });
+			async disposeAsync() {
+				await server.removeNodeDebugTarget({ targetId });
 				client.close();
 			},
 		});

@@ -1,5 +1,5 @@
 import { join } from "path";
-import { spawnSync } from "child_process";
+import { spawn } from "child_process";
 import { PortConfig } from "../lib";
 
 export interface BackgroundWorkerArgs {
@@ -9,13 +9,12 @@ export interface BackgroundWorkerArgs {
 	log: boolean;
 	debugProxyPortConfig: PortConfig;
 	showUi: boolean;
+	shouldContinue: boolean;
 }
 
-export function launchAndWaitForBackgroundProcessSync(
-	args: BackgroundWorkerArgs
-) {
+export function launchBackgroundProcess(args: BackgroundWorkerArgs) {
 	const entry = join(__dirname, "./entry.js");
-	spawnSync("node", [`${entry}`, JSON.stringify(args)], {
+	spawn("node", [`${entry}`, JSON.stringify(args)], {
 		stdio: "inherit",
 		shell: false,
 		windowsHide: true,
