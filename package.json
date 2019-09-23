@@ -15,7 +15,8 @@
 	},
 	"scripts": {
 		"run-example": "node ./example/script.js",
-		"dev": "tsc --watch"
+		"dev": "tsc --watch",
+		"build": "tsc"
 	},
 	"dependencies": {
 		"@hediet/std": "^0.1.12",
