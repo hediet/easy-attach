@@ -1,6 +1,6 @@
 {
 	"name": "easy-attach",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"author": {
 		"name": "Henning Dieterichs",
 		"email": "henning.dieterichs@live.de"
@@ -45,6 +45,7 @@
 		"dist",
 		"entries",
 		"docs",
-		"src"
+		"src",
+		"assets"
 	]
 }
