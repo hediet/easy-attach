@@ -29,7 +29,7 @@
 		"clipboardy": "^1.2.3",
 		"get-port": "^5.0.0",
 		"http-proxy": "^1.17.0",
-		"node-fetch": "^2.3.0",
+		"node-fetch": "^3.1.1",
 		"simples": "^0.8.8",
 		"vscode-rpc": "^0.2.2"
 	},
