@@ -70,6 +70,18 @@ If you don't want the debugger to halt, you can pass a `continue` flag:
 require("...\\easy-attach\\debugger")({ continue: true });
 ```
 
+## Connect with JetBrains (Webstorm / IntelliJ IDEA / etc...)
+
+Required plugins: **JavaScript and TypeScript, JavaScript Debugger, Node.js**
+
+You can connect to the node js application by following these steps:
+
+- Wait for the `require("[...]\\debugger")()` statement to open a new chrome window
+- Copy the port from the url `...&ws=localhost:PORT/...`
+- Create an `Attach to Node.js/Chrome - Run/Debug Configuration`
+- Paste the port into the `Port` section
+- Click on the debug button to start debugging your application
+
 ## Flags
 
 You can specify flags by passing an object:
