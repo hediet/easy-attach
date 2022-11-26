@@ -79,6 +79,7 @@ You can connect to the node js application by following these steps:
 - Add a `require("[...]\\debugger")({ debugProxyPort: PORT })` with some random port, e.g. 54834
 - Create an `Attach to Node.js/Chrome - Run/Debug Configuration`
 - Paste the port into the `Port` section
+- Make sure `Reconnect automatically` is checked, so whenever you restart the TypeScript Service, it can reconnect automatically
 - Wait for the statement to open a new chrome window
 - Click on the debug button to start debugging your application
 
