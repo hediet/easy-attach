@@ -76,10 +76,10 @@ Required plugins: **JavaScript and TypeScript, JavaScript Debugger, Node.js**
 
 You can connect to the node js application by following these steps:
 
-- Wait for the `require("[...]\\debugger")()` statement to open a new chrome window
-- Copy the port from the url `...&ws=localhost:PORT/...`
+- Add a `require("[...]\\debugger")({ debugProxyPort: PORT })` with some random port, e.g. 54834
 - Create an `Attach to Node.js/Chrome - Run/Debug Configuration`
 - Paste the port into the `Port` section
+- Wait for the statement to open a new chrome window
 - Click on the debug button to start debugging your application
 
 ## Flags
